@@ -37,16 +37,17 @@ public class EmployeServiceImpl implements IEmployeService {
 	}
 
 	@Override
-	public int addOrUpdateEmploye(Employe employe) {
+	public Employe addOrUpdateEmploye(Employe employe) {
 		employeRepository.save(employe);
-		return employe.getId();
+		return employe;
 	}
 
 
-	public void mettreAjourEmailByEmployeId(String email, int employeId) {
+	public Employe mettreAjourEmailByEmployeId(String email, int employeId) {
 		Employe employe = employeRepository.findById(employeId).get();
 		employe.setEmail(email);
 		employeRepository.save(employe);
+		return employe;
 
 	}
 
@@ -104,18 +105,25 @@ public class EmployeServiceImpl implements IEmployeService {
 		return employeManagedEntity.getPrenom();
 	}
 	 
-	public void deleteEmployeById(int employeId)
+	public Boolean deleteEmployeById(int employeId)
 	{
-		Employe employe = employeRepository.findById(employeId).get();
+		try {
+			Employe employe = employeRepository.findById(employeId).get();
 
-		//Desaffecter l'employe de tous les departements
-		//c'est le bout master qui permet de mettre a jour
-		//la table d'association
-		for(Departement dep : employe.getDepartements()){
-			dep.getEmployes().remove(employe);
+			//Desaffecter l'employe de tous les departements
+			//c'est le bout master qui permet de mettre a jour
+			//la table d'association
+			for(Departement dep : employe.getDepartements()){
+				dep.getEmployes().remove(employe);
+			}
+
+			employeRepository.delete(employe);
+			return true;
+			
+		} catch (Exception e) {
+			return false;
 		}
-
-		employeRepository.delete(employe);
+		
 	}
 
 	public void deleteContratById(int contratId) {

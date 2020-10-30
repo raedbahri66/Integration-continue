@@ -20,14 +20,14 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 	@Autowired
 	DepartementRepository deptRepoistory;
 	
-	public int ajouterEntreprise(Entreprise entreprise) {
+	public Entreprise ajouterEntreprise(Entreprise entreprise) {
 		entrepriseRepoistory.save(entreprise);
-		return entreprise.getId();
+		return entreprise;
 	}
 
-	public int ajouterDepartement(Departement dep) {
+	public Departement ajouterDepartement(Departement dep) {
 		deptRepoistory.save(dep);
-		return dep.getId();
+		return dep;
 	}
 	
 	public void affecterDepartementAEntreprise(int depId, int entrepriseId) {
@@ -55,18 +55,22 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 	}
 
 	@Transactional
-	public void deleteEntrepriseById(int entrepriseId) {
-		entrepriseRepoistory.delete(entrepriseRepoistory.findById(entrepriseId).get());	
+	public Boolean  deleteEntrepriseById(int entrepriseId) {
+		entrepriseRepoistory.delete(entrepriseRepoistory.findById(entrepriseId).get());
+		return true;	
 	}
 
 	@Transactional
-	public void deleteDepartementById(int depId) {
-		deptRepoistory.delete(deptRepoistory.findById(depId).get());	
+	public Boolean deleteDepartementById(int depId) {
+		deptRepoistory.delete(deptRepoistory.findById(depId).get());
+		return true;	
 	}
 
 
 	public Entreprise getEntrepriseById(int entrepriseId) {
 		return entrepriseRepoistory.findById(entrepriseId).get();	
 	}
+
+	
 
 }

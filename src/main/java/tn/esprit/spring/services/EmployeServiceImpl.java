@@ -3,10 +3,7 @@ package tn.esprit.spring.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,35 +56,38 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	@Transactional	
 	public void affecterEmployeADepartement(int employeId, int depId) {
-		Departement depManagedEntity = deptRepoistory.findById(depId).get();
-		Employe employeManagedEntity = employeRepository.findById(employeId).get();
+		Departement depManagedEntity = deptRepoistory.findById(depId).orElse(null);
+		Employe employeManagedEntity = employeRepository.findById(employeId).orElse(null);
 
-		if(depManagedEntity.getEmployes() == null){
+		if(depManagedEntity!=null && employeManagedEntity!=null) {
+			if(depManagedEntity.getEmployes() == null){
 
-			List<Employe> employes = new ArrayList<>();
-			employes.add(employeManagedEntity);
-			depManagedEntity.setEmployes(employes);
-		}else{
+				List<Employe> employes = new ArrayList<>();
+				employes.add(employeManagedEntity);
+				depManagedEntity.setEmployes(employes);
+			}else{
 
-			depManagedEntity.getEmployes().add(employeManagedEntity);
+				depManagedEntity.getEmployes().add(employeManagedEntity);
+			}
+			deptRepoistory.save(depManagedEntity); 
 		}
-
-		// à ajouter? 
-		deptRepoistory.save(depManagedEntity); 
+		
 
 	}
 	@Transactional
 	public void desaffecterEmployeDuDepartement(int employeId, int depId)
 	{
-		Departement dep = deptRepoistory.findById(depId).get();
-
-		int employeNb = dep.getEmployes().size();
-		for(int index = 0; index < employeNb; index++){
-			if(dep.getEmployes().get(index).getId() == employeId){
-				dep.getEmployes().remove(index);
-				break;//a revoir
+		Departement dep = deptRepoistory.findById(depId).orElse(null);
+		if(dep!=null) {
+			int employeNb = dep.getEmployes().size();
+			for(int index = 0; index < employeNb; index++){
+				if(dep.getEmployes().get(index).getId() == employeId){
+					dep.getEmployes().remove(index);
+					break;
+				}
 			}
 		}
+		
 	} 
 	
 	// Tablesapce (espace disque) 
@@ -110,8 +110,7 @@ public class EmployeServiceImpl implements IEmployeService {
 	public String getEmployePrenomById(int employeId) {
 		Employe employeManagedEntity = employeRepository.findById(employeId).orElse(null);
 		if(employeManagedEntity!=null) {
-			String x = employeManagedEntity.getPrenom();
-			return x;
+			return employeManagedEntity.getPrenom();
 		}
 		return "Nothing found";
 
@@ -122,9 +121,6 @@ public class EmployeServiceImpl implements IEmployeService {
 		try {
 			Employe employe = employeRepository.findById(employeId).orElse(null);
 
-			//Desaffecter l'employe de tous les departements
-			//c'est le bout master qui permet de mettre a jour
-			//la table d'association
 			if(employe!=null) {
 				for(Departement dep : employe.getDepartements()){
 					dep.getEmployes().remove(employe);

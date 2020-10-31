@@ -20,7 +20,7 @@ public class EmployeServiceImplTest {
 	
 	@Test
 	public void testMettreAjourEmailByEmployeId() {
-		Employe employe = new Employe("Raed", "Bahri", "raed.bahri@esprit.tn", true, Role.INGENIEUR);
+		Employe employe = new Employe("Raed", "Bahri2", "raed.bahri1@esprit.tn", true, Role.INGENIEUR);
 		Employe addedEmp = iEmployeService.addOrUpdateEmploye(employe);
 		Employe updatedEmploye = iEmployeService.mettreAjourEmailByEmployeId("Raedbahri@mail.com", addedEmp.getId());
 		assertNotEquals(addedEmp.getEmail(), updatedEmploye.getEmail());
@@ -28,7 +28,7 @@ public class EmployeServiceImplTest {
 	
 	@Test
 	public void testaddOrUpdateEmploye() {
-		Employe employe = new Employe("Ahmed", "Bahri", "raed.bahri@esprit.tn", true, Role.INGENIEUR);
+		Employe employe = new Employe("Ahmed", "Bahri2", "raed.bahri2@esprit.tn", true, Role.INGENIEUR);
 		Employe addedEmp = iEmployeService.addOrUpdateEmploye(employe);
 		assertEquals(employe.getNom(), addedEmp.getNom());
 	}

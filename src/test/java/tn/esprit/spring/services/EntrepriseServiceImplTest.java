@@ -21,7 +21,7 @@ public class EntrepriseServiceImplTest {
 	public void testajouterEntreprise()  {
 		Entreprise en= new Entreprise("FIS", "informatique");
 		entrepriseservice.ajouterEntreprise(en);
-		assertEquals(en.getName(), "FIS");
+		assertEquals("FIS" , en.getName());
 	}
 	
 	@Test
@@ -29,7 +29,7 @@ public class EntrepriseServiceImplTest {
 		
 		Departement en = new Departement("HR");
 		entrepriseservice.ajouterDepartement(en);
-		assertEquals(en.getName(), "HR");
+		assertEquals( "HR", en.getName());
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class EntrepriseServiceImplTest {
 		
 		Departement en = new Departement("HR");
 		entrepriseservice.affecterDepartementAEntreprise(1, 1);
-		assertEquals(en.getName(), "HR");
+		assertEquals("HR" ,en.getName());
 	}
 	@Test
 	public void testupdateEntreprise()    {
@@ -46,18 +46,18 @@ public class EntrepriseServiceImplTest {
 		
 		Entreprise en= new Entreprise(1,"FIS", "info");
 		entrepriseservice.ajouterEntreprise(en);
-		assertEquals(en.getName(), "FIS");
+		assertEquals("FIS" ,en.getName());
 	}
 	@Test
 	public void testgetAllDepartementsNamesByEntreprises() {
 		assertEquals(5, entrepriseservice.getAllDepartementsNamesByEntreprise(1).size());
 	}
 	
-	/*@Test
+	@Test
 	public void testdeleteEntrepriseById() {
 		
 		assertTrue(entrepriseservice.deleteEntrepriseById(2));
-	}*/
+	}
 	
 	
 	

@@ -227,5 +227,6 @@ public class EmployeServiceImpl implements IEmployeService {
 
 		return (List<Employe>) employeRepository.findAll();
 	}
+	
 
 }

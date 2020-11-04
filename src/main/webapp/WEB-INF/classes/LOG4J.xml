@@ -29,7 +29,7 @@
 		</layout>
 	</appender>
 
-	<!-- Niveau de log : DEBEUG -->
+	<!-- Niveau de  log : DEBEUG -->
 	<!-- Les logs sont reversés sur la Console et dans un fichier -->
 	<root>
 		<level value="DEBUG" />

@@ -45,22 +45,26 @@ public class EmployeServiceImpl implements IEmployeService {
 	@Override
 	public Employe addOrUpdateEmploye(Employe employe) {
 		l.info("In addOrUpdateEmploye");
-		employeRepository.save(employe);
-		return employe;
+		Employe emp =employeRepository.save(employe);
+		l.info("out addOrUpdateEmploye");
+		return emp;
 	}
 
 	public Employe mettreAjourEmailByEmployeId(String email, int employeId) {
+		l.info("In mettreAjourEmailByEmployeId");
 		Employe employe = employeRepository.findById(employeId).orElse(null);
 		if(employe != null) {
 			employe.setEmail(email);
 			employeRepository.save(employe);
 		}
+		l.info("out mettreAjourEmailByEmployeId");
 		return employe;
 
 	}
 
 	@Transactional	
 	public void affecterEmployeADepartement(int employeId, int depId) {
+		l.info("In affecterEmployeADepartement");
 		Departement depManagedEntity = deptRepoistory.findById(depId).orElse(null);
 		Employe employeManagedEntity = employeRepository.findById(employeId).orElse(null);
 
@@ -76,12 +80,14 @@ public class EmployeServiceImpl implements IEmployeService {
 			}
 			deptRepoistory.save(depManagedEntity); 
 		}
+		l.info("out affecterEmployeADepartement");
 		
 
 	}
 	@Transactional
 	public void desaffecterEmployeDuDepartement(int employeId, int depId)
 	{
+		l.info("In desaffecterEmployeDuDepartement");
 		Departement dep = deptRepoistory.findById(depId).orElse(null);
 		if(dep!=null) {
 			int employeNb = dep.getEmployes().size();
@@ -92,37 +98,49 @@ public class EmployeServiceImpl implements IEmployeService {
 				}
 			}
 		}
-		
+		l.info("out desaffecterEmployeDuDepartement");
 	} 
 	
 	// Tablesapce (espace disque) 
 
 	public int ajouterContrat(Contrat contrat) {
+		l.info("In ajouterContrat");
 		contratRepoistory.save(contrat);
-		return contrat.getReference();
+		int c=  contrat.getReference();
+		l.info("out ajouterContrat");
+		return c;
 	}
 
 	public void affecterContratAEmploye(int contratId, int employeId) {
+		l.info("In affecterContratAEmploye");
 		Contrat contratManagedEntity = contratRepoistory.findById(contratId).orElse(null);
 		Employe employeManagedEntity = employeRepository.findById(employeId).orElse(null);
 		if(contratManagedEntity!=null && employeManagedEntity!=null) {
 			contratManagedEntity.setEmploye(employeManagedEntity);
 		}
 		contratRepoistory.save(contratManagedEntity);
+		l.info("Out affecterContratAEmploye");
+
 
 	}
 
 	public String getEmployePrenomById(int employeId) {
+		l.info("In getEmployePrenomById");
+
 		Employe employeManagedEntity = employeRepository.findById(employeId).orElse(null);
 		if(employeManagedEntity!=null) {
 			return employeManagedEntity.getPrenom();
 		}
+		l.info("out getEmployePrenomById");
+
 		return "Nothing found";
 
 	}
 	 
 	public Boolean deleteEmployeById(int employeId)
 	{
+		l.info("In deleteEmployeById");
+
 		try {
 			Employe employe = employeRepository.findById(employeId).orElse(null);
 
@@ -132,59 +150,81 @@ public class EmployeServiceImpl implements IEmployeService {
 				}
 
 				employeRepository.delete(employe);
+				l.info("out deleteEmployeById");
 				return true;
 			}
 			return false;
-			
 		} catch (Exception e) {
+			l.error("Exception "+e);
 			return false;
 		}
+
 		
 	}
 
 	public void deleteContratById(int contratId) {
+		l.info("in deleteContratById");
 		Contrat contratManagedEntity = contratRepoistory.findById(contratId).orElse(null);
 		if(contratManagedEntity!=null) {
 			contratRepoistory.delete(contratManagedEntity);
 		}
+		l.info("out deleteContratById");
 
 	}
 
 	public int getNombreEmployeJPQL() {
+		l.info("in getNombreEmployeJPQL");
 		return employeRepository.countemp();
 	}
 
 	public List<String> getAllEmployeNamesJPQL() {
+		l.info("in getAllEmployeNamesJPQL");
 		return employeRepository.employeNames();
 
 	}
 
 	public List<Employe> getAllEmployeByEntreprise(Entreprise entreprise) {
+		l.info("in getAllEmployeByEntreprise");
 		return employeRepository.getAllEmployeByEntreprisec(entreprise);
 	}
 
 	public void mettreAjourEmailByEmployeIdJPQL(String email, int employeId) {
+		l.info("in mettreAjourEmailByEmployeIdJPQL");
+
 		employeRepository.mettreAjourEmailByEmployeIdJPQL(email, employeId);
+		l.info("out mettreAjourEmailByEmployeIdJPQL");
+
 
 	}
 	public void deleteAllContratJPQL() {
+		l.info("in deleteAllContratJPQL");
 		employeRepository.deleteAllContratJPQL();
+		l.info("out deleteAllContratJPQL");
+
 	}
 
 	public float getSalaireByEmployeIdJPQL(int employeId) {
+		l.info("in getSalaireByEmployeIdJPQL");
+
 		return employeRepository.getSalaireByEmployeIdJPQL(employeId);
 	}
 
 	public Double getSalaireMoyenByDepartementId(int departementId) {
+		l.info("in getSalaireMoyenByDepartementId");
+
 		return employeRepository.getSalaireMoyenByDepartementId(departementId);
 	}
 
 	public List<Timesheet> getTimesheetsByMissionAndDate(Employe employe, Mission mission, Date dateDebut,
 			Date dateFin) {
+		l.info("in getTimesheetsByMissionAndDate");
+
 		return timesheetRepository.getTimesheetsByMissionAndDate(employe, mission, dateDebut, dateFin);
 	}
 
 	public List<Employe> getAllEmployes() {
+		l.info("in getAllEmployes");
+
 		return (List<Employe>) employeRepository.findAll();
 	}
 

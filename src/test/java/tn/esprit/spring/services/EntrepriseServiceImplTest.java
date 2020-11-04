@@ -2,6 +2,8 @@ package tn.esprit.spring.services;
 
 import static org.junit.Assert.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,14 @@ import tn.esprit.spring.entities.Entreprise;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class EntrepriseServiceImplTest {
-	
+  //  private static final Logger LOGGER = LogManager.getLogger(EntrepriseServiceImpl.class);
+
 	@Autowired 
 	EntrepriseServiceImpl entrepriseservice ;
 	@Test
 	public void testajouterEntreprise()  {
+	//	LOGGER.info("In ajouterEntreprise() : ");
+
 		Entreprise en= new Entreprise("FIS", "informatique");
 		entrepriseservice.ajouterEntreprise(en);
 		assertEquals("FIS" , en.getName());

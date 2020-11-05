@@ -102,6 +102,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 
 	public Entreprise getEntrepriseById(int entrepriseId) {
 		LOGGER.info("In getEntrepriseById ");
+	
 		Entreprise ent = entrepriseRepoistory.findById(entrepriseId).orElse(null);
 		LOGGER.info("Out getEntrepriseById without errors.");
 

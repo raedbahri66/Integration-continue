@@ -3,7 +3,8 @@ package tn.esprit.spring.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ import tn.esprit.spring.repository.TimesheetRepository;
 @Service
 public class EmployeServiceImpl implements IEmployeService {
 	
-
+	private static final Logger l = LogManager.getLogger(EmployeServiceImpl.class);
 
 	@Autowired
 	EmployeRepository employeRepository;
@@ -35,11 +36,15 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	@Override
 	public Employe authenticate(String login, String password) {
-		return employeRepository.getEmployeByEmailAndPassword(login, password);
+		l.info("In authenticate");
+		Employe emp =employeRepository.getEmployeByEmailAndPassword(login, password);
+		l.info("Out authenticate");
+		return emp;
 	}
 
 	@Override
 	public Employe addOrUpdateEmploye(Employe employe) {
+		l.info("In addOrUpdateEmploye");
 		employeRepository.save(employe);
 		return employe;
 	}

@@ -25,15 +25,18 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 	DepartementRepository deptRepoistory;
 	
 	public Entreprise ajouterEntreprise(Entreprise entreprise) {
-		LOGGER.info("In ajouterEntreprise() : ");
+		LOGGER.info("In ajouterEntreprise ");
 		entrepriseRepoistory.save(entreprise);
-		LOGGER.info("Out ajouterEntreprise() without errors.");
+		LOGGER.info("Out ajouterEntreprise without errors.");
 		return entreprise;
 		
 	}
 
 	public Departement ajouterDepartement(Departement dep) {
+		LOGGER.info("In ajouterDepartement ");
 		deptRepoistory.save(dep);
+		LOGGER.info("Out ajouterDepartement without errors.");
+
 		return dep;
 	}
 	@Transactional
@@ -41,19 +44,23 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 		
 				Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElse(null);
 				Departement depManagedEntity = deptRepoistory.findById(depId).orElse(null);
+				LOGGER.info("In affecterDepartementAEntreprise ");
 				if(depManagedEntity!=null) {
 				depManagedEntity.setEntreprise(entrepriseManagedEntity);
 				deptRepoistory.save(depManagedEntity);}
+				LOGGER.info("Out affecterDepartementAEntreprise without errors.");
 		
 	}
 	
 	public List<String> getAllDepartementsNamesByEntreprise(int entrepriseId) {
 		Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElse(null);
 		List<String> depNames = new ArrayList<>();
+		LOGGER.info("In getAllDepartementsNamesByEntreprise ");
 		if(entrepriseManagedEntity!=null){
 		for(Departement dep : entrepriseManagedEntity.getDepartements()){
 			depNames.add(dep.getName());
 		}}
+		LOGGER.info("Out getAllDepartementsNamesByEntreprise without errors.");
 		
 		return depNames;
 	}
@@ -63,6 +70,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 		
 	
 			Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElse(null);
+			LOGGER.info("In deleteEntrepriseById ");
 
 			if(entrepriseManagedEntity!=null) {
 				
@@ -70,26 +78,34 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 				entrepriseRepoistory.delete(entrepriseManagedEntity);
 				
 			}
+			LOGGER.info("Out deleteEntrepriseById without errors.");
+
 			return true;		
 	}
 
 	@Transactional
 	public Boolean deleteDepartementById(int depId) {
 		Departement depManagedEntity = deptRepoistory.findById(depId).orElse(null);
+		LOGGER.info("In deleteDepartementById ");
 		if(depManagedEntity!=null) {
 			
 
 			deptRepoistory.delete(depManagedEntity);
 			
 		}
+		LOGGER.info("Out deleteDepartementById without errors.");
+
 
 		return true;	
 	}
 
 
 	public Entreprise getEntrepriseById(int entrepriseId) {
+		LOGGER.info("In getEntrepriseById ");
+		Entreprise ent = entrepriseRepoistory.findById(entrepriseId).orElse(null);
+		LOGGER.info("Out getEntrepriseById without errors.");
 
-		return entrepriseRepoistory.findById(entrepriseId).orElse(null);	
+		return ent;
 	}
 
 	

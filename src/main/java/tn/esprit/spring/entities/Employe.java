@@ -33,7 +33,7 @@ public class Employe implements Serializable {
 
 	private String email;
 
-	private String password;
+	private String password1;
 	
 	private boolean actif;
 	
@@ -64,7 +64,7 @@ public class Employe implements Serializable {
 		this.prenom = prenom;
 		this.nom = nom;
 		this.email = email;
-		this.password = password;
+		this.password1 = password;
 		this.actif = actif;
 		this.role = role;
 	}
@@ -75,7 +75,7 @@ public class Employe implements Serializable {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
-		this.password = password;
+		this.password1 = password;
 		this.actif = actif;
 		this.role = role;
 	}
@@ -116,12 +116,12 @@ public class Employe implements Serializable {
 		return email;
 	}
 	 
-	public String getPassword() {
-		return password;
+	public String getPassword1() {
+		return password1;
 	}
  
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword1(String password) {
+		this.password1 = password;
 	}
 
 	public void setEmail(String email) {
@@ -177,7 +177,7 @@ public class Employe implements Serializable {
 	@Override
 	public String toString() {
 		return "Employe [id=" + id + ", prenom=" + prenom + ", nom=" + nom + ", email=" + email + ", password="
-				+ password + ", actif=" + actif + ", role=" + role + "]";
+				+ password1 + ", actif=" + actif + ", role=" + role + "]";
 	}
 	
 	
